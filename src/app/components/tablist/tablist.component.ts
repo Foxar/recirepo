@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { FormControl } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { NavigationEnd, Router } from "@angular/router";
-import { concat, mergeMap, of, Subscriber, Subscription } from "rxjs";
+import { concat, mergeMap, of, Subscription } from "rxjs";
 import { DeleteRecipeDialogComponent } from "src/app/dialogs/confirmDeleteRecipeDialog/dialog-confirm-delete-recipe.component";
 import { IngredientApiModel } from "src/app/models/ingredient-api.model";
 import { RecipeApiModel } from "src/app/models/recipe-api.model";
