@@ -14,7 +14,7 @@ export class UnsavedChanges implements CanDeactivate<RecipeFormComponent> {
             if(component.recipeForm.pristine){
                 return of(true);
             }else {
-                return this.dialog.open(UnsavedFormDialogComponent).afterClosed().pipe(tap(console.log));
+                return this.dialog.open(UnsavedFormDialogComponent).afterClosed();
             }
         }
 }

@@ -73,21 +73,6 @@ export class TablistComponent implements OnInit {
             this.ref.markForCheck();
             this.router.navigate(['/']);
         })
-        
-        // subscribe(res => {
-        //     if(res){
-        //         concat(
-        //             this.apiService.deleteRecipe(id),
-        //             this.apiService.getAllRecipes(),
-        //         )    
-        //         this.apiService.deleteRecipe(id).subscribe();
-        //         this.apiService.getAllRecipes().subscribe(recipes => {
-        //             this.mockRecipes = recipes
-        //         })
-        //         this.filterRecipes(this.searchForm.value ?? '');
-        //         this.ref.markForCheck();
-        //     }
-        // })
     }
 
     getAllRecipesAndRefresh(){

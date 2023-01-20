@@ -106,12 +106,9 @@ export class RecipeFormComponent implements OnInit {
             ingredientName: ['',Validators.required],
             ingredientQuantity: ['',Validators.required],
         }))
-
-        console.log(this.recipeForm);
     }
 
     onSave() {
-        console.log(this.recipeForm);
         if(this.recipeForm.valid)
         {
             if(this.recipeToEdit){

@@ -35,7 +35,6 @@ export class RecipeComponent implements OnInit {
     loading = true;
 
     ngOnInit() {
-        console.log("recipe oninit");
         this.route.paramMap
         this.route.params.pipe(
             tap(() =>{
