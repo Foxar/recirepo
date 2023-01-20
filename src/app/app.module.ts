@@ -15,14 +15,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { AuthorInfoDialogComponent } from './components/dialogs/authorInfoDialog/dialog-author-info.component';
-import { DeleteRecipeDialogComponent } from './components/dialogs/confirmDeleteRecipeDialog/dialog-confirm-delete-recipe.component';
 import { RecipeFormComponent } from './components/recipeform/recipe-form.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { UnsavedFormDialogComponent } from './components/dialogs/unsavedFormDialog/dialog-unsaved-form.component';
-import { UnsavedChanges } from './components/guards/unsaved-changes-guard.service';
+import { UnsavedChanges } from './guards/unsaved-changes-guard.service';
 import { HttpClientModule } from '@angular/common/http';
 import { PreparationTimePipe } from './pipes/preparationTimePipe';
+import { AuthorInfoDialogComponent } from './dialogs/authorInfoDialog/dialog-author-info.component';
+import { DeleteRecipeDialogComponent } from './dialogs/confirmDeleteRecipeDialog/dialog-confirm-delete-recipe.component';
+import { UnsavedFormDialogComponent } from './dialogs/unsavedFormDialog/dialog-unsaved-form.component';
 
 
 const routes = [

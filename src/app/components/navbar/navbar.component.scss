@@ -1,0 +1,28 @@
+@import '@angular/material/theming';
+@include mat-core();
+
+
+
+$authorButtonRippleSize: 60px;
+$authorButtonSize: 32px;
+
+.navbarContent {
+    background-color: mat-color(mat-palette($mat-purple, 400));
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    h1 {
+        font-weight: 400;
+        font-size: 35px;
+    }
+    .authorButton {
+        width: $authorButtonRippleSize;
+        height: $authorButtonRippleSize;
+        .mat-icon-button, .mat-icon {
+            font-size: $authorButtonSize;
+            width: $authorButtonSize;
+            height: $authorButtonSize;
+        }
+
+    }
+}

@@ -1,0 +1,19 @@
+.recipeContainer {
+    padding: 50px 0;
+    
+}
+.recipeHeader{
+    
+    padding: 0 50px;
+    display: flex;
+    justify-content: space-between;
+    h1 {
+        font-weight: 400;
+        font-size: xx-large;
+    }
+    border-bottom: 1px solid black;
+
+}
+.recipeDetails {
+    padding: 50px;
+}

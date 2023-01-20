@@ -1,0 +1,31 @@
+@import '@angular/material/theming';
+@include mat-core();
+
+.tablistContent {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: mat-color(mat-palette($mat-purple, 700));
+    box-sizing: border-box;
+    
+    height: 100%;
+
+    .tablistHeader{
+        display: flex;
+        gap: 10px;
+        .tablistSearch {
+            flex-grow: 9;
+        }
+    }
+
+    .tablistRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        a.recipeLink {
+            
+            flex-grow:10;
+            font-size: 25px;
+        }
+    }
+}

@@ -1,0 +1,98 @@
+<div class="recipeForm">
+    <h2 *ngIf="!recipeToEdit">
+        New Recipe
+    </h2>
+
+    <form [formGroup]="this.recipeForm">
+        <mat-form-field>
+            <mat-label>Recipe name</mat-label>
+            <input matInput placeholder="Sushi" type="text" id="recipeName" [formControlName]="'name'">
+            <mat-error *ngIf="this.recipeForm.controls.name.hasError('required')">
+                Required field.
+            </mat-error>
+            <mat-error *ngIf="this.recipeForm.controls.name.hasError('uniqueRecipeName')">
+                This name is already in the repository. Please use a unique name.
+            </mat-error>
+            <mat-error *ngIf="this.recipeForm.controls.name.hasError('minlength')">
+                Needs at least {{this.recipeForm.controls.name.errors!["minlength"].requiredLength}} characters.
+            </mat-error>
+            <mat-error *ngIf="this.recipeForm.controls.name.hasError('maxlength')">
+                Needs at most {{this.recipeForm.controls.name.errors!["maxlength"].requiredLength}} characters.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Recipe description</mat-label>
+            <textarea matInput placeholder="A interesting dish" type="text" id="recipeDescription" formControlName="description"></textarea>
+            <mat-error *ngIf="this.recipeForm.controls.description.hasError('required')">
+                Required field.
+            </mat-error>
+            <mat-error *ngIf="this.recipeForm.controls.description.hasError('minlength')">
+                Needs at least {{this.recipeForm.controls.description.errors!["minlength"].requiredLength}} characters.
+            </mat-error>
+            <mat-error *ngIf="this.recipeForm.controls.description.hasError('maxlength')">
+                Needs at most {{this.recipeForm.controls.description.errors!["maxlength"].requiredLength}} characters.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Preparation time (in minutes)</mat-label>
+            <input matInput placeholder="60m" id="preparationTime" formControlName="preparationTimeInMinutes" type="number">
+            <mat-error *ngIf="this.recipeForm.controls.preparationTimeInMinutes.hasError('required')">
+                Required field.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-accordion class="accordion" formArrayName="ingredients">
+            <div class="accordionPanelSection">
+                <mat-expansion-panel *ngFor="let ingredient of ingredients.controls; index as i">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                        Ingredient {{i + 1}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="panelContent" [formGroupName]="i">
+                        <mat-form-field>
+                            <mat-label>Ingredient name</mat-label>
+                            <input matInput placeholder="Salt" type="text" id="ingredientName" formControlName="ingredientName">
+                            <mat-error *ngIf="this.recipeForm.controls.ingredients.at(i).controls.ingredientName.hasError('required')">
+                                Required field.
+                            </mat-error>
+                            <mat-error *ngIf="this.recipeForm.controls.ingredients.at(i).controls.ingredientName.hasError('minlength')">
+                                Needs at least {{this.recipeForm.controls.ingredients.at(i).controls.ingredientName.errors!["minlength"].requiredLength}} characters.
+                            </mat-error>
+                            <mat-error *ngIf="this.recipeForm.controls.ingredients.at(i).controls.ingredientName.hasError('maxlength')">
+                                Needs at most {{this.recipeForm.controls.ingredients.at(i).controls.ingredientName.errors!["maxlength"].requiredLength}} characters.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Ingredient quantity</mat-label>
+                            <input matInput placeholder="1 tablespoon" type="text" id="ingredientQuantity" formControlName="ingredientQuantity">
+                            <mat-error *ngIf="this.recipeForm.controls.ingredients.at(i).controls.ingredientQuantity.hasError('required')">
+                                Required field.
+                            </mat-error>
+                            <mat-error *ngIf="this.recipeForm.controls.ingredients.at(i).controls.ingredientQuantity.hasError('minlength')">
+                                Needs at least {{this.recipeForm.controls.ingredients.at(i).controls.ingredientQuantity.errors!["minlength"].requiredLength}} characters.
+                            </mat-error>
+                            <mat-error *ngIf="this.recipeForm.controls.ingredients.at(i).controls.ingredientQuantity.hasError('maxlength')">
+                                Needs at most {{this.recipeForm.controls.ingredients.at(i).controls.ingredientQuantity.errors!["maxlength"].requiredLength}} characters.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+            <div class="accordionButtonSection">
+                <button mat-mini-fab color="secondary" class="addIngredientButton" (click)="addIngredient()"><mat-icon>add</mat-icon></button>
+            </div>
+        </mat-accordion>
+        <mat-error *ngIf="this.recipeForm.controls.ingredients.hasError('insufficientIngredients')">
+            Needs minimum 2 ingredients.
+        </mat-error>
+
+        <div class="recipeFormActions">
+            <button mat-raised-button color="primary" (click)="onSave()" type="button">Save</button>
+            <a mat-raised-button color="secondary" type="button" [routerLink]="'/'">Cancel</a>
+        </div>
+    </form>
+
+</div>

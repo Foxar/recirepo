@@ -1,0 +1,28 @@
+<div class="tablistContent">
+    <div class="tablistHeader">
+        <mat-form-field appearance="outline" class="tablistSearch">
+            <input matInput placeholder="Search" [formControl] = "searchForm" type="search">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <button mat-fab color="accent" class="addRecipeButton" [routerLink]="'/new'">
+            <mat-icon>
+                add
+            </mat-icon>
+        </button>
+    </div>
+
+    <div class="tablistRow" *ngFor="let recipe of filteredRecipes">
+        <a mat-button color="secondary" class="recipeLink" [routerLink]="'/recipe/' + recipe._id" routerLinkActive="active" >{{recipe.name}}</a>
+        <a mat-icon-button color="secondary" [routerLink]="'/edit/' + recipe._id">
+            <mat-icon>
+                edit
+            </mat-icon>
+        </a>
+        <button mat-icon-button color="secondary" (click)="deleteRecipe(recipe._id!)">
+            <mat-icon>
+                delete
+            </mat-icon>
+        </button>
+    </div>
+    
+</div>

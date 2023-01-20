@@ -1,0 +1,51 @@
+.recipeForm {
+    
+    margin: 50px auto;
+    width: 60%;
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        mat-form-field, .recipeFormActions {
+            width: 80%;
+        }
+
+        textarea#recipeDescription {
+            min-height: 100px;
+        }
+    
+        .recipeFormActions{
+            margin-top: 25px;
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 50px;
+        }
+    
+        .accordion {
+
+            display: flex;
+            align-items: flex-end;
+
+
+            .accordionPanelSection {
+                width: 80%;
+                padding-right: 5%;
+
+                .mat-expansion-panel {
+                    margin-bottom: 0;
+                }
+                
+            }
+            .accordionButtonSection{
+                display: flex;
+                width: 15%
+            }
+    
+            .addIngredientButton {
+                
+            }
+        }
+    }
+    
+}

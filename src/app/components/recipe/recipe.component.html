@@ -1,0 +1,44 @@
+<div *ngIf="this.recipe && this.loading === false">
+    <div class="recipeContainer">
+        
+        <div class="recipeHeader">
+            <h1>{{this.recipe.name}}</h1>
+            <div class="recipeButtons">
+                <button mat-icon-button color="secondary" (click)="deleteRecipe(recipe._id!)">
+                    <mat-icon>
+                        delete
+                    </mat-icon>
+                </button>
+                <a mat-icon-button color="secondary" [routerLink]="'/edit/' + this.recipe._id">
+                    <mat-icon>
+                        edit
+                    </mat-icon>
+                </a>
+            </div>
+        </div>
+        <div class="recipeDetails">
+            <div>
+    
+                <p>
+                    Name: {{this.recipe.name}}
+                </p>
+                <p>
+                    Preparation time: {{this.recipe.preparationTimeInMinutes | preparationTime}}
+                </p>
+                <p>
+                    Description: {{this.recipe.description}}
+                </p>
+    
+                Ingredients:
+                <ul>
+    
+                
+                    <li *ngFor="let i of this.recipe.ingredients">{{i.quantity}} of {{i.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!this.recipe || this.loading">
+    Loading...
+</div>
