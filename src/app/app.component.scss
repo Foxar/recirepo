@@ -1,0 +1,32 @@
+:host {
+    height: 100%;
+}
+app-navbar {
+    width: 100%;
+    position: sticky;
+    z-index: 90;   
+    top: 0;
+}
+
+.appContent {
+    
+    display: flex;
+    flex-grow: 10;
+    flex-wrap: wrap;
+    padding: 0 10vw;
+    align-content: stretch;
+    app-tablist {
+        flex-grow: 0;
+        width: 40%;
+        
+        background-color: greenyellow;
+        min-height: 50vh;
+    }
+    .recipeContent {
+        overflow-y:scroll;
+        flex-grow: 3;
+        min-height: 50vh;
+        background-color: blueviolet;
+        
+    }
+}
