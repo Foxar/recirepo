@@ -12,8 +12,10 @@ $authorButtonSize: 32px;
     display: flex;
     justify-content: space-between;
     h1 {
-        font-weight: 400;
+        font-weight: 500;
         font-size: 35px;
+        margin: 0;
+        line-height: 55px;
     }
     .authorButton {
         width: $authorButtonRippleSize;
