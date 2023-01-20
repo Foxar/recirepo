@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { map, switchMap, tap } from "rxjs";
+import { map, Subscription, switchMap, tap } from "rxjs";
 import { DeleteRecipeDialogComponent } from "src/app/dialogs/confirmDeleteRecipeDialog/dialog-confirm-delete-recipe.component";
 import { RecipeApiModel } from "src/app/models/recipe-api.model";
 import { RecipesApiService } from "src/app/services/recipesApi.service";
@@ -13,7 +13,7 @@ import { RecipesApiService } from "src/app/services/recipesApi.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ['./recipe.component.scss']
 })
-export class RecipeComponent implements OnInit {
+export class RecipeComponent implements OnInit, OnDestroy {
     constructor(
             private route: ActivatedRoute,
             private router: Router,
@@ -21,7 +21,7 @@ export class RecipeComponent implements OnInit {
             private apiService: RecipesApiService,
             private dialog: MatDialog,
         ){
-            this.router.events.subscribe(
+            this.routerEventsSubscription$ = this.router.events.subscribe(
                 (event) => {
                 if(event instanceof(NavigationEnd))
                     this.ref.markForCheck();
@@ -34,9 +34,13 @@ export class RecipeComponent implements OnInit {
 
     loading = true;
 
+    routeParamSubscription$: Subscription | undefined;
+    dialogRefSubscription$: Subscription | undefined;
+    routerEventsSubscription$: Subscription | undefined;
+
     ngOnInit() {
-        this.route.paramMap
-        this.route.params.pipe(
+        
+        this.routeParamSubscription$ = this.route.params.pipe(
             tap(() =>{
                 this.loading = true;
             }),
@@ -57,13 +61,20 @@ export class RecipeComponent implements OnInit {
     deleteRecipe(id: string){
         const dialogRef = this.dialog.open(DeleteRecipeDialogComponent);
 
-        dialogRef.afterClosed().subscribe(res => {
+        this.dialogRefSubscription$ = dialogRef.afterClosed().subscribe(res => {
             if(res){
                 this.apiService.deleteRecipe(id).subscribe(() => {
                     this.router.navigate(['/']);
                 });
             }
         })
+    }
+
+    ngOnDestroy() {
+        this.dialogRefSubscription$?.unsubscribe();
+        this.routeParamSubscription$?.unsubscribe();
+        this.routerEventsSubscription$?.unsubscribe();
+
     }
 
 

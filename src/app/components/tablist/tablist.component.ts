@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { NavigationEnd, Router } from "@angular/router";
-import { concat, mergeMap, of } from "rxjs";
+import { concat, mergeMap, of, Subscriber, Subscription } from "rxjs";
 import { DeleteRecipeDialogComponent } from "src/app/dialogs/confirmDeleteRecipeDialog/dialog-confirm-delete-recipe.component";
 import { IngredientApiModel } from "src/app/models/ingredient-api.model";
 import { RecipeApiModel } from "src/app/models/recipe-api.model";
@@ -15,7 +15,7 @@ import { RecipesApiService } from "src/app/services/recipesApi.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ['./tablist.component.scss']
 })
-export class TablistComponent implements OnInit {
+export class TablistComponent implements OnInit, OnDestroy {
     constructor(
         public dialog: MatDialog,
         private apiService: RecipesApiService,
@@ -25,12 +25,16 @@ export class TablistComponent implements OnInit {
     mockRecipes: RecipeApiModel[] = [];
     filteredRecipes: RecipeApiModel[] = [];
 
+    dialogRefSubscription$: Subscription | undefined;
+    routerEventsSubscription$: Subscription | undefined;
+    searchFormSubscription$: Subscription | undefined;
+
     ngOnInit(): void {
         this.getAllRecipesAndRefresh();
         
         
-        this.searchForm.valueChanges.subscribe((v: string | null) => this.filterRecipes(v))
-        this.router.events.subscribe(
+        this.searchFormSubscription$ = this.searchForm.valueChanges.subscribe((v: string | null) => this.filterRecipes(v))
+        this.routerEventsSubscription$ = this.router.events.subscribe(
             (event) => {
                 if(event instanceof(NavigationEnd))
                 {
@@ -56,7 +60,7 @@ export class TablistComponent implements OnInit {
     deleteRecipe(id: string){
         const dialogRef = this.dialog.open(DeleteRecipeDialogComponent);
 
-        dialogRef.afterClosed().pipe(
+        this.dialogRefSubscription$ = dialogRef.afterClosed().pipe(
             mergeMap(res => {
                 if(res){
                     return concat(
@@ -82,6 +86,12 @@ export class TablistComponent implements OnInit {
             this.filterRecipes(this.searchForm.value ?? '');
             this.ref.markForCheck();
         })
+    }
+
+    ngOnDestroy(): void {
+        this.dialogRefSubscription$?.unsubscribe();
+        this.searchFormSubscription$?.unsubscribe();
+        this.routerEventsSubscription$?.unsubscribe();
     }
 
 }

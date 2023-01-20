@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
 import { FormArray, FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { switchMap } from "rxjs";
+import { Subscription, switchMap } from "rxjs";
 import { RecipeApiModel } from "src/app/models/recipe-api.model";
 import { RecipeFormModel } from "src/app/models/recipe-form.model";
 import { RecipeMapperService } from "src/app/services/recipeMapper.service";
@@ -15,7 +15,7 @@ import { UniqueRecipeNameValidator } from "src/app/validators/uniqueRecipeNameVa
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ['./recipe-form.component.scss']
 })
-export class RecipeFormComponent implements OnInit {
+export class RecipeFormComponent implements OnInit, OnDestroy {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -28,11 +28,13 @@ export class RecipeFormComponent implements OnInit {
     
     recipeToEdit: RecipeApiModel | undefined;
 
+    routeParamsSubscription$: Subscription | undefined;
+
 
     recipeForm = this.initialRecipeForm();
 
     ngOnInit(): void {
-        this.route.params.pipe(
+        this.routeParamsSubscription$ = this.route.params.pipe(
                 switchMap((params) => {
                     this.recipeForm = this.initialRecipeForm();
                     this.ref.markForCheck();
@@ -123,6 +125,10 @@ export class RecipeFormComponent implements OnInit {
                 });
             }
         }
+    }
+
+    ngOnDestroy(): void {
+        this.routeParamsSubscription$?.unsubscribe();
     }
 }
 
