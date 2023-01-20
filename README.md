@@ -1,8 +1,11 @@
 # Recirepo - A repository of recipes
 
-This project is part of a recruitment task, involving creation of a reporistory of recipes, using crudcrud.com to simulate an api.
+This project is part of a recruitment task, involving creation of a repository of recipes, using crudcrud.com to simulate an api. The crudcrud.com API key is likely expired, and a new, working one must be provided in `recipesApi.service.ts`.
 
-Few notes to keep in mind:
+## Running
+Just run `ng serve -o` to open the app, after installing the dependancies.
+
+## Notes
 - `ng build --prod` will not run 'without warnings/errors'. This command has been deprecated in Angular 12 and removed in Angular 14. Instead, `ng build --configuration production` has been used.
 - `ng lint` does return a single warning, related to HttpHeaders. The task required inclusion of 'X-API-KEY' with value 'HoA' to each API call, however crudcrud.com seems to not allow requests to have such a header. The code remains in the `recipesApi.service.ts` file, although commented out, creating an unused import, and the aforementioned lint warning.
 - `ng test` command returns error related to lack of tests, which were an optional requirement and I had no time to implement.
